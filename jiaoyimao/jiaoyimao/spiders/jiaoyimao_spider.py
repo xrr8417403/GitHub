@@ -75,6 +75,5 @@ class JiaoyimaoSpider(scrapy.Spider):
             yield {
                 'name':game.css('h2::text').extract(),
                 'url':game.css('div.name>a::attr(href)').extract()
-        GitHub
             }
 '''
