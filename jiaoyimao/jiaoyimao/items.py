@@ -4,15 +4,17 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
-
 import scrapy
+from scrapy.loader.processors import MapCompose
 
+def add_name(value):
+    return value + "item_loader test!"
 
 class JiaoyimaoItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     #游戏名称
-    name = scrapy.Field()
+    name = scrapy.Field(input_processor=MapCompose(add_name))
     #游戏商品总数
     total = scrapy.Field()
     #游戏商品类别

@@ -17,6 +17,8 @@ ITEM_PIPELINES = {
     'jiaoyimao.pipelines.JiaoyimaoPipeline':300
 }
 
+SQLite_DB = 'jiaoyimao.db'
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'jiaoyimao (+http://www.yourdomain.com)'
 
