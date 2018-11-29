@@ -14,10 +14,16 @@ BOT_NAME = 'jiaoyimao'
 SPIDER_MODULES = ['jiaoyimao.spiders']
 NEWSPIDER_MODULE = 'jiaoyimao.spiders'
 ITEM_PIPELINES = {
-    'jiaoyimao.pipelines.JiaoyimaoPipeline':300
+    'jiaoyimao.pipelines.MySqlTwistedPipeline':300
 }
 
-SQLite_DB = 'jiaoyimao.db'
+MYSQL_HOST = 'localhost'
+MYSQL_DB = 'jiaoyimao'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'root'
+MYSQL_PORT = '3306'
+MYSQL_CHARSET = 'utf8'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'jiaoyimao (+http://www.yourdomain.com)'
