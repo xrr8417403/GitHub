@@ -21,7 +21,7 @@ MYSQL_HOST = 'localhost'
 MYSQL_DB = 'jiaoyimao'
 MYSQL_USER = 'root'
 MYSQL_PASSWORD = 'root'
-MYSQL_PORT = '3306'
+MYSQL_PORT = 3306
 MYSQL_CHARSET = 'utf8'
 
 

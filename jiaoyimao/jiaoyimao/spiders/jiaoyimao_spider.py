@@ -22,15 +22,15 @@ class JiaoyimaoSpider(scrapy.Spider):
 
     def parse_item(self,response):
         #从游戏详情页获取游戏名称
-        name = response.xpath('//div[@class="breadcrumb"]/a[3]/text()').extract()
-        print("name:",name)
+        name = response.xpath('//div[@class="breadcrumb"]/a[3]/text()').extract_first()
+        #print("name:",name)
         #获取该游戏总商品数，若大于0则
         total = int(response.xpath('//div[@class="more"]/span/text()').extract_first())
         if total > 0:
             for href in response.xpath('//div[@class="row row-sort"]/div[@class="con"]/span[@class="name"]'):
                 category_url = href.xpath('a/@href').extract_first()
-                category = href.xpath('a/text()').extract_first()
-                print("category:",category)
+                category = href.xpath('a/text()').extract_first().strip()
+                #print("category:",category)
                 yield scrapy.Request(category_url,callback=self.get_category,meta={"name":name,"total":total,"category":category})
 
 
@@ -40,7 +40,7 @@ class JiaoyimaoSpider(scrapy.Spider):
         if count > 0:
             name = response.meta["name"]
             total = response.meta["total"]
-            print("total:",total)
+            #print("total:",total)
             for sub_category_urls in response.xpath('//div[@class="row row-sort"]//span[@class="name"]'):
                 sub_category_url = sub_category_urls.xpath('a/@href').extract_first()
                 print(sub_category_url)
@@ -54,7 +54,7 @@ class JiaoyimaoSpider(scrapy.Spider):
         # item_loder 实现
         item_loder = ItemLoader(item=JiaoyimaoItem(),response=response)
         count = int(response.xpath('//div[@class="more"]/span/text()').extract_first())
-        print("count:", count)
+        #print("count:", count)
         if count > 0:
             item_loder.add_value('name',response.meta['name'])
             item_loder.add_value('total',response.meta['total'])
