@@ -25,10 +25,14 @@ def game_contents(url):
     tags = new_soup.find_all('li',class_="taptap-review-item collapse in")
     for tag in tags:
         user_name = tag.find('span',class_="taptap-user").a.text
-        time = tag.find('span',data-toggle="tooltip").get("title data-original-title")
-        device = tag.find('span',class_="text-footer-device").text
+        time = tag.find('span',attrs={"data-toggle": "tooltip"}).get("title")
+        if tag.find('span',class_="text-footer-device"):
+            device = tag.find('span',class_="text-footer-device").text
+        else:
+            device = 'pc'
         contents = tag.find('div',class_="item-text-body").text
         print("%s------使用%s-------%s"  %(user_name,device,time))
+        print(contents)
 
 
 
@@ -43,4 +47,5 @@ for game_info in games_info:
     url = game_info.find('div',class_="top-card-middle").a.get("href")
     print("==================================================")
     game_detail(url)
+    game_contents(url)
     #name = BeautifulSoup(game_info,"lxml")
