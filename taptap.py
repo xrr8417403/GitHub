@@ -1,5 +1,7 @@
 # _*_ coding: utf-8 _*_
 
+import re
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -33,6 +35,25 @@ def game_contents(url):
         contents = tag.find('div',class_="item-text-body").text
         print("%s------使用%s-------%s"  %(user_name,device,time))
         print(contents)
+        for sub_tag in tag.find_all('li',class_=re.compile("taptap-comment-item ")):
+            sub_user = sub_tag.get("data-user")
+            sub_contents = sub_tag.find('div',class_="item-text-body").text
+            print("*****************************来自【%s】的回复************************" %sub_user)
+            print(sub_contents)
+        if tag.find('div',class_="taptap-comments-buttons") and tag.find('div',class_="taptap-comments-buttons").section:
+            url_tag = tag.find('div',class_="taptap-comments-buttons").section.find_all('a',rel="nofollow")
+            get_sub_contents(url_tag)
+
+def get_sub_contents(tags):
+    start_page = 2
+    end_page = tags[-2].text
+    url = tags[0].get('href').split("page=")[0]
+    #print(url)
+    urls = [url + "page=" + str(i) for i in range(start_page,int(end_page)+1)]
+    res = requests.get(urls[0]).text
+    js = json.loads(res,encoding='gb2312')
+    print(js)
+
 
 
 
@@ -45,7 +66,7 @@ soup = BeautifulSoup(res,"lxml")
 games_info = soup.find_all('div',class_="taptap-top-card")
 for game_info in games_info:
     url = game_info.find('div',class_="top-card-middle").a.get("href")
-    print("==================================================")
+    print("================================================================================")
     game_detail(url)
     game_contents(url)
     #name = BeautifulSoup(game_info,"lxml")
