@@ -29,10 +29,10 @@ def get_game_contents(url):
     res = requests.get(url)
     print(res.url)
     soup = BeautifulSoup(res.text,'lxml')
-    all_contents_url = soup.find('a',class_="pull-right").get("href")
-    new_res = requests.get(all_contents_url).text
-    new_soup = BeautifulSoup(new_res,'lxml')
-    tags = new_soup.find_all('li',class_="taptap-review-item collapse in")
+    #all_contents_url = soup.find('a',class_="pull-right").get("href")
+    #new_res = requests.get(all_contents_url).text
+    #new_soup = BeautifulSoup(new_res,'lxml')
+    tags = soup.find_all('li',class_="taptap-review-item collapse in")
     for tag in tags:
         user_name = tag.find('span',class_="taptap-user").a.text
         time = tag.find('span',attrs={"data-toggle": "tooltip"}).get("title")
